@@ -1,0 +1,46 @@
+@use '@/shared/styles/mixins' as m;
+
+.page {
+  padding-block: var(--space-7) var(--space-9);
+}
+
+.container {
+  @include m.container;
+
+  display: grid;
+  gap: var(--space-7);
+}
+
+.header {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 60ch;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+
+  @include m.up('md') {
+    font-size: 52px;
+  }
+}
+
+.lead {
+  color: var(--color-text-accent);
+  font-size: 18px;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-7) var(--space-6);
+
+  @include m.up('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include m.up('lg') {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

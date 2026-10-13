@@ -1,0 +1,41 @@
+@use '@/shared/styles/mixins' as m;
+
+.root {
+  display: grid;
+  gap: 10px;
+}
+
+.block {
+  @include m.panel;
+
+  padding: 29px 16px;
+
+  @include m.up('md') {
+    padding: 31px 32px 33px 44px;
+  }
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+
+  @include m.up('md') {
+    font-size: 20px;
+  }
+}
+
+// Абзацы разделены пустой строкой, как `<br><br>` в разметке сайта.
+.text {
+  display: grid;
+  gap: 1.2em;
+  margin-top: 24px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+
+  @include m.up('md') {
+    margin-top: 50px;
+  }
+}

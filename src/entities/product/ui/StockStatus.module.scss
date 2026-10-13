@@ -1,0 +1,23 @@
+// Размеры точки зависят от размера текста блока, в который компонент встроен, и задаются
+// переменными --stock-dot-size и --stock-dot-gap (по умолчанию — вариант для крупного текста).
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.dot {
+  flex: none;
+  width: var(--stock-dot-size, 8px);
+  height: var(--stock-dot-size, 8px);
+  margin-right: var(--stock-dot-gap, 5px);
+  border-radius: var(--radius-round);
+  background-color: var(--color-stock-in);
+}
+
+.root[data-level='low'] .dot {
+  background-color: var(--color-stock-low);
+}
+
+.root[data-level='out'] .dot {
+  background-color: var(--color-stock-out);
+}

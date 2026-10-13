@@ -1,0 +1,151 @@
+@use '@/shared/styles/mixins' as m;
+
+.root {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.main {
+  // Листание, как у слайдера centersvet.ru: прокрутка по горизонтали, ease-in-out (скорость — в коде).
+  --swiper-wrapper-transition-timing-function: ease-in-out;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-panel);
+  background-color: var(--color-media-bg);
+  // Пальцем листают вбок, а страницу можно прокручивать вертикально и увеличивать щипком.
+  touch-action: pan-y pinch-zoom;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: var(--color-media-bg);
+}
+
+// Картинка слайда целиком — кнопка «открыть на весь экран» (клик по центру кадра, как на сайте).
+.expand {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline-offset: -4px;
+  }
+}
+
+// Зоны перелистывания по краям кадра, как у слайдера centersvet.ru: по 30% ширины, курсор-«рука»,
+// стрелка проявляется при наведении. На экранах уже 768px зон нет — там листают свайпом. Нижняя
+// полоса кадра в зону не входит: в ней органы управления видео и плеера.
+.zone {
+  --zone-bottom: 64px;
+
+  position: absolute;
+  top: 0;
+  bottom: var(--zone-bottom);
+  z-index: 2;
+  display: none;
+  align-items: center;
+  width: 30%;
+  // Зона короче кадра на нижнюю полосу, а стрелка должна стоять по центру всего кадра, поэтому
+  // сверху — отступ той же высоты.
+  padding: var(--zone-bottom) var(--space-5) 0;
+  border: 0;
+  background: none;
+  // Стрелка белая, но с режимом difference: она видна и на светлом кадре, и на тёмном видео.
+  color: var(--color-on-accent);
+  mix-blend-mode: difference;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity var(--transition-base);
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -4px;
+  }
+
+  @include m.up('tablet') {
+    display: flex;
+  }
+
+  // Слайд один: листать нечего, Swiper блокирует кнопки.
+  &:global(.swiper-button-lock) {
+    display: none;
+  }
+}
+
+.prev {
+  left: 0;
+  justify-content: flex-start;
+
+  svg {
+    transform: scaleX(-1);
+  }
+}
+
+.next {
+  right: 0;
+  justify-content: flex-end;
+}
+
+.thumbs {
+  width: 100%;
+}
+
+.thumb {
+  position: relative;
+  width: 96px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid transparent;
+  // Скругление как у рамки слайдера.
+  border-radius: var(--radius-panel);
+  background-color: var(--color-media-bg);
+  opacity: 0.55;
+  cursor: pointer;
+  transition:
+    opacity var(--transition-fast),
+    border-color var(--transition-fast);
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:global(.swiper-slide-thumb-active) {
+    border-color: var(--color-border);
+    opacity: 1;
+  }
+}
+
+.thumbImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// Миниатюра чертежа (SVG с белой подложкой) вписывается целиком и сливается с серым фоном.
+.contain {
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-overlay);
+  color: var(--color-on-accent);
+}

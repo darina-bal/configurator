@@ -1,0 +1,56 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  color: inherit;
+  text-decoration: none;
+}
+
+.media {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--color-media-bg);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--transition-base);
+}
+
+.root:hover .image {
+  transform: scale(1.03);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.root:hover .name {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: var(--color-text-accent);
+  font-size: 14px;
+}
+
+.price {
+  margin-top: var(--space-1);
+  font-size: 18px;
+}

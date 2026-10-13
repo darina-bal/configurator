@@ -1,0 +1,60 @@
+@use '@/shared/styles/mixins' as m;
+
+.panel {
+  @include m.panel;
+
+  padding: 10px 16px;
+
+  @include m.up('md') {
+    padding: 22px 44px;
+  }
+}
+
+.list {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+// Названия и значения делят строку пополам; последняя строка без разделителя.
+.row {
+  display: flex;
+  min-height: 38px;
+  padding: 10px 0 6px;
+  border-bottom: 1px solid var(--color-divider);
+
+  @include m.up('md') {
+    min-height: 55px;
+    padding: 16px 0 6px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.name {
+  flex: 0 0 50%;
+  padding-right: var(--space-3);
+  opacity: 0.6;
+
+  // Колонка названий не сжимается, когда значения прижаты вправо.
+  @include m.up('md') {
+    padding-right: 0;
+  }
+}
+
+// На десктопе значения занимают правую колонку (~37% строки), как у сайта: длинный артикул
+// переносится на вторую строку после точки.
+.value {
+  flex: 0 0 50%;
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+
+  @include m.up('md') {
+    flex-basis: 37%;
+    margin-left: auto;
+  }
+}

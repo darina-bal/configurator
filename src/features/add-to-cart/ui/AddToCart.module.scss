@@ -1,0 +1,162 @@
+@use '@/shared/styles/mixins' as m;
+
+// Размеры элементов задаёт блок, в который компонент встроен (виджет меняет их по ширине блока).
+// По умолчанию — компактный вариант блока цены centersvet.ru, как на узких экранах сайта:
+//   --order-caption-size  размер подписей «Количество» и «В корзину»
+//   --order-step-size     сторона кнопок «−» и «+» и высота поля количества
+//   --order-input-width   ширина поля количества
+//   --order-input-font-size  размер цифр в поле
+//   --order-button-width, --order-button-height  размер кнопки корзины
+//   --order-gap           расстояние между количеством и кнопкой
+.root {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--order-gap, 19px);
+}
+
+.amount {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.action {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.caption {
+  margin-bottom: 10px;
+  font-size: var(--order-caption-size, 9px);
+  font-weight: 400;
+  line-height: 14px;
+  white-space: nowrap;
+}
+
+.stepper {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--color-control-border);
+  border-radius: 4px;
+}
+
+.step {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--order-step-size, 26px);
+  height: var(--order-step-size, 26px);
+  padding: 0;
+  border: 0;
+  background: none;
+  transition: background-color var(--transition-fast);
+
+  &:hover:not(:disabled, [aria-disabled='true']) {
+    background-color: var(--color-control-bg);
+  }
+
+  // Рамка фокуса рисуется внутри степпера: снаружи её срежет overflow.
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+
+  // У границы количества кнопка остаётся обычной, как на сайте; затемняем лишь отключённую целиком.
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}
+
+.input {
+  flex: 1 1 auto;
+  width: var(--order-input-width, 43px);
+  height: var(--order-step-size, 26px);
+  min-width: 0;
+  padding: 0 2px;
+  border: 0;
+  border-inline: 1px solid var(--color-control-border);
+  border-radius: 0;
+  background: transparent;
+  font-size: var(--order-input-font-size, 12px);
+  font-weight: 400;
+  text-align: center;
+  appearance: textfield;
+
+  // Стрелки встроенного счётчика не нужны: есть свои кнопки.
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}
+
+.cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--order-button-width, 64px);
+  height: var(--order-button-height, 28px);
+  padding: 0;
+  border: 1px solid var(--color-control-bg);
+  border-radius: 5px;
+  background-color: var(--color-control-bg);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+
+  &:hover:not(:disabled, [aria-disabled='true']) {
+    border-color: var(--color-control-bg-hover);
+    background-color: var(--color-control-bg-hover);
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// Подтверждение «добавлено»: чёрная кнопка с белой галочкой, как чёрные кнопки сайта. Остаётся
+// контрастной, даже если после добавления в корзину лежит весь остаток (кнопка aria-disabled).
+.cart.added,
+.cart.added:hover:not(:disabled, [aria-disabled='true']),
+.cart.added[aria-disabled='true'] {
+  border-color: var(--color-border);
+  background-color: var(--color-border);
+  color: var(--color-on-accent);
+  opacity: 1;
+}
+
+// Корзина растягивается на всю кнопку (в её svg уже есть поля), галочка — компактнее.
+.cartIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.checkIcon {
+  width: auto;
+  height: 55%;
+}
+
+.announcement {
+  @include m.visually-hidden;
+}

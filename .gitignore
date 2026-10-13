@@ -1,0 +1,14 @@
+# Зависимости и сборка
+node_modules
+dist
+coverage
+*.tsbuildinfo
+
+# Локальные настройки и логи
+*.local
+*.log
+npm-debug.log*
+.DS_Store
+
+# Локальные инструкции для Claude Code — не коммитятся
+CLAUDE.md

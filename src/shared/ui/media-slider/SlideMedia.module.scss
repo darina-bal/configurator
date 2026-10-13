@@ -1,0 +1,15 @@
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// Изображение вписывается в кадр целиком (чертёж; в полноэкранной галерее — любое).
+.contain {
+  object-fit: contain;
+}
+
+// Чертёж — SVG с белой подложкой: multiply растворяет её в сером фоне кадра.
+.multiply {
+  mix-blend-mode: multiply;
+}

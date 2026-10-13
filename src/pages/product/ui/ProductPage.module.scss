@@ -1,0 +1,39 @@
+@use '@/shared/styles/mixins' as m;
+
+.page {
+  padding-block: var(--space-5) var(--space-9);
+}
+
+.container {
+  @include m.container;
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+
+  @include m.up('md') {
+    grid-template-columns: minmax(0, 58fr) minmax(0, 42fr);
+    // Зазор между колонками равен полям страницы (3% на десктопе). От ширины правой колонки зависит
+    // ступень блока цены: крупная — от 540px. С такой шириной колонки порог приходится на окно
+    // ~1410px, как и до перехода на контейнер сайта, и на экране 1440px (1425px с полосой
+    // прокрутки) блок цены остаётся крупным.
+    column-gap: var(--container-gutter);
+    align-items: start;
+  }
+}
+
+// Галерея остаётся на экране, пока листаются шаги выбора справа.
+.gallery {
+  min-width: 0;
+
+  @include m.up('md') {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+}
+
+.panel {
+  min-width: 0;
+}

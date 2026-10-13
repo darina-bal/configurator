@@ -1,0 +1,11 @@
+// Подвал всегда внизу окна: на коротких страницах (404) растягивается область содержимого.
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.content {
+  flex: 1 0 auto;
+}

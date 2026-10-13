@@ -1,0 +1,5 @@
+// Галерея — отдельный слой View Transition: при выборе опции браузер плавно (кроссфейдом) меняет
+// её кадр, а остальная страница обновляется сразу (правила — в shared/styles/_view-transitions.scss).
+.root {
+  view-transition-name: product-gallery;
+}

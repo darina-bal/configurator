@@ -1,0 +1,19 @@
+// Выбор опции конфигуратора запускает View Transition (`viewTransition: true` в навигации
+// useProductConfigurator): браузер плавно сменяет кадр галереи — слой «product-gallery»
+// (view-transition-name задан у виджета галереи). Остальная страница обновляется сразу.
+// В браузерах без View Transitions кадр просто меняется без анимации.
+
+// Корневой слой без собственного кроссфейда: иначе плавно растворялась бы вся страница.
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+// Старый и новый кадр галереи перетекают друг в друга (линейный кроссфейд по умолчанию).
+::view-transition-group(product-gallery),
+::view-transition-old(product-gallery),
+::view-transition-new(product-gallery) {
+  animation-duration: 500ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}

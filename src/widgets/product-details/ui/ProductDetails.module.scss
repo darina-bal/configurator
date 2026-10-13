@@ -1,0 +1,21 @@
+@use '@/shared/styles/mixins' as m;
+
+.root {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+// Таблица характеристик и блок скачивания: на узких экранах друг под другом, на десктопе — две
+// колонки (таблица шире), блок скачивания прижат к верху и не тянется на высоту таблицы.
+.item {
+  display: grid;
+  gap: 12px;
+  padding: 15px 0 60px;
+
+  @include m.up('md') {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 20px;
+    align-items: start;
+  }
+}

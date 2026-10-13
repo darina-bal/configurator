@@ -1,0 +1,136 @@
+@use '@/shared/styles/mixins' as m;
+
+// Блок цены повторяет блок цены на страницах товаров centersvet.ru (размеры сняты с живой страницы).
+// Ступени адаптива зависят от ширины самого блока, а не экрана: правая колонка на десктопе уже,
+// чем плашка на сайте.
+//   от 540px   крупный вариант (так блок выглядит на десктопе сайта);
+//   350–539px  компактный (так он выглядит на сайте на планшетах и телефонах);
+//   уже 350px  те же элементы в два ряда: цена сверху, количество и кнопка под ней.
+$wide: 540px;
+$narrow: 350px;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+
+  @include m.up('md') {
+    font-size: 44px;
+  }
+}
+
+.steps {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.summary {
+  container: price-block / inline-size;
+}
+
+.plate {
+  @include m.panel;
+
+  display: flex;
+  align-items: center;
+  padding: 20px 13px 18px 16px;
+  // Рамка того же цвета, что и плашка: на сайте она добавляет те же 2px высоты.
+  border: 1px solid var(--color-block-bg);
+
+  // Размеры элементов блока: компактный вариант, ниже — переопределения для других ступеней.
+  // Переменные читают StockStatus (точка наличия) и AddToCart (количество и кнопка).
+  --stock-dot-size: 6px;
+  --stock-dot-gap: 3px;
+  --order-caption-size: 9px;
+  --order-step-size: 26px;
+  --order-input-width: 43px;
+  --order-input-font-size: 12px;
+  --order-button-width: 64px;
+  --order-button-height: 28px;
+  --order-gap: 19px;
+
+  @container price-block (min-width: #{$wide}) {
+    padding: 20px 28px 18px;
+    --stock-dot-size: 9px;
+    --stock-dot-gap: 5px;
+    --order-caption-size: 14px;
+    --order-step-size: 40px;
+    --order-input-width: 64px;
+    --order-input-font-size: 18px;
+    --order-button-width: 94px;
+    --order-button-height: 42px;
+    // На сайте здесь 56px; в узкой колонке уменьшаем, чтобы блок не вылезал за плашку.
+    --order-gap: clamp(20px, 5cqw, 56px);
+  }
+
+  @container price-block (max-width: #{$narrow - 0.02px}) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+}
+
+.price {
+  flex: none;
+  padding-right: 10px;
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 1.5;
+
+  @container price-block (min-width: #{$wide}) {
+    font-size: 12px;
+  }
+
+  @container price-block (max-width: #{$narrow - 0.02px}) {
+    padding-right: 0;
+  }
+}
+
+.priceTitle {
+  margin-bottom: 2px;
+}
+
+.priceValue {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+
+  @container price-block (min-width: #{$wide}) {
+    font-size: 23.57px;
+  }
+}
+
+// Вертикальный разделитель между ценой и заказом: в компактном варианте по центру свободного места,
+// в крупном — рядом с ценой, как на сайте.
+.divider {
+  flex: none;
+  width: 1px;
+  height: 47px;
+  margin-inline: auto;
+  background-color: var(--color-divider);
+
+  @container price-block (min-width: #{$wide}) {
+    margin-inline: 32px auto;
+  }
+
+  @container price-block (max-width: #{$narrow - 0.02px}) {
+    display: none;
+  }
+}
+
+.order {
+  padding-left: 10px;
+
+  @container price-block (max-width: #{$narrow - 0.02px}) {
+    width: 100%;
+    padding-left: 0;
+  }
+}
